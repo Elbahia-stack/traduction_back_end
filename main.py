@@ -7,6 +7,7 @@ from security import hash_password, verify_password
 from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
 from dotenv import load_dotenv
 from auth import create_access_token, verify_token,fake_users
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import requests
 
@@ -33,6 +34,19 @@ def query(payload,model_name):
 
 app=FastAPI()
 
+origins = [
+     "http://localhost:3000",
+    "http://172.26.112.1:3000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.post("/register")
 def regester(user:UserRegistre,db: Session = Depends(get_db)):
     db_user = db.query(model.User).filter(model.User.username == user.username).first()
@@ -56,6 +70,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
     token = create_access_token(user.username,user.password)
     return {"access_token": token, "token_type": "bearer"}
+
 @app.post("/traduire", response_model=TranslateResponse)
 def translate_text(data: TranslateRequest, token: str = Depends(oauth2_scheme)):
     verify_token(token)
