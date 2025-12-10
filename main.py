@@ -36,7 +36,8 @@ app=FastAPI()
 
 origins = [
      "http://localhost:3000",
-    "http://172.26.112.1:3000"
+    "http://172.26.112.1:3000",
+    "https://traduction-front-end.vercel.app"
 ]
 
 app.add_middleware(

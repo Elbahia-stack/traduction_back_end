@@ -3,7 +3,10 @@ uvicorn
 python-dotenv
 python-jose
 requests
-passlib[bcrypt]
 pydantic
 python-multipart
 sqlalchemy
+pytest 
+pytest-asyncio
+httpx  
+ pwdlib[argon2]

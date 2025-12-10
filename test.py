@@ -6,7 +6,7 @@ client = TestClient(app)
 def test_login_mauvais_identifiants():
     response = client.post(
         "/login",
-        data={"username": "inconnu", "password": "incorrect"}
+        data={"username": "chiama", "password": "123523"}
     )
     assert response.status_code == 401
     
